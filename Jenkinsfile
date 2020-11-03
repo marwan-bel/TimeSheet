@@ -6,19 +6,20 @@ pipeline {
         tools{
                 maven 'Maven'
         }
+
+        environment {
+        PAGERDUTY_SERVERS_INT_KEY = credentials('PAGERDUTY_SERVERS_INT_KEY')
+    }
  
         stages{
         
             stage('Clean'){
                 steps {
                 	        script {
-                            try {
+                            
 				                 echo "Clean project"
 				                 bat "mvn clean"
-				                }catch(err)
-				                {
-				                mail bcc: '', body: "${err}", cc: '', from: '', replyTo: '', subject: 'Jenkins Clean Failure', to: 'houssem.entr@gmail.com'
-				                }
+				                
 				                
 				                }
 
@@ -28,20 +29,12 @@ pipeline {
              stage('Deploy'){
                 steps {
                 	        script {
-                            try {				               
+                            				               
 				                 echo "Deploy project"
 				                 bat "mvn deploy"
 				                 bat "mvn sonar:sonar"
-				                }catch(errr)
-				                {
-				                mail bcc: '', cc: '', from: '', replyTo: '',
-				                subject: "TESTS Job '${env.JOB_NAME}'- (${env.BUILD_NUMBER}) || DEPLOY ERROR:  ${errr}",
-                                body: readFile("target/surefire-reports/tn.esprit.spring.TimesheetApplicationTests.txt"),
-                                mimeType:'text/html',
-                                to: 'houssem.entr@gmail.com'
-				                def myvar=${errr}
-				                echo ${myvar}
 				                }
+				                
 				                
 				                }				             
 
@@ -52,17 +45,15 @@ pipeline {
 
 
 post {
-
-
-
-
     always {
-				                mail bcc: '', cc: '', from: '', replyTo: '',
-				                subject: "Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME} - (${env.BUILD_NUMBER})",
-                                body: "${currentBuild.currentResult}: Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}\n More info at: ${env.BUILD_URL}",
-                                to: 'houssem.entr@gmail.com'
-            }
-}
+            sh  """ curl -X POST -H "content-type: application/json" \
+                -d '{"routing_key":"${env.PAGERDUTY_SERVERS_INT_KEY}","event_action":"trigger","payload":{"summary":"${env.JOB_NAME} job failed ${env.BUILD_URL}","source":"Jenkins","severity":"critical","component":"exploratory-stats","group":"prod-datapipe","class":"deploy"}}' \
+                https://events.pagerduty.com/v2/enqueue"""
+        }
 
 
+
+
+    
 }
+
