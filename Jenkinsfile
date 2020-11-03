@@ -8,7 +8,7 @@ pipeline {
         }
 
         environment {
-        PAGERDUTY_SERVERS_INT_KEY = credentials('PAGERDUTY_SERVERS_INT_KEY')
+            PAGERDUTY_SERVERS_INT_KEY = credentials('PAGERDUTY_SERVERS_INT_KEY')
     }
  
         stages{
