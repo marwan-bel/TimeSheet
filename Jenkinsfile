@@ -7,9 +7,6 @@ pipeline {
                 maven 'Maven'
         }
 
-        environment {
-            PAGERDUTY_SERVERS_INT_KEY = credentials('PAGERDUTY_SERVERS_INT_KEY')
-    }
  
         stages{
         
@@ -44,17 +41,6 @@ pipeline {
         
 
 
-post {
-    always {
-            sh  """ curl -X POST -H "content-type: application/json" \
-                -d '{"routing_key":"${env.PAGERDUTY_SERVERS_INT_KEY}","event_action":"trigger","payload":{"summary":"${env.JOB_NAME} job failed ${env.BUILD_URL}","source":"Jenkins","severity":"critical","component":"exploratory-stats","group":"prod-datapipe","class":"deploy"}}' \
-                https://events.pagerduty.com/v2/enqueue"""
-        }
 
-
-
-
-    
-}
 }
 
