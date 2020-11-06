@@ -163,7 +163,7 @@
     </snapshotRepository>
     <repository>
       <id>nexus-releases</id>
-      <url>http://localhost:8081/nexus/content/repositories/releases/</url>
+      <url>http://localhost:8081/#browse/browse:maven-releases</url>
     </repository>
   </distributionManagement>
 
