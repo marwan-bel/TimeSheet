@@ -35,7 +35,6 @@ public class EntrepriseServiceImplTests {
 
 	
 	
-	/////////////////////////////////// START HOUSSEM MODULE CRUD TEST ENTREPRISE ////////////////////////////////////////
 
 	@Test
 	public void testajouterEntreprise() throws ParseException {
@@ -81,7 +80,6 @@ public class EntrepriseServiceImplTests {
 		assertEquals(Entreprises.size(), Entreprises.size());
 	}
 	
-	///////////////////////////////////////// FINISH HOUSSEM MODULE CRUD TEST ENTREPRISE /////////////////////////////
 
 	
 	
