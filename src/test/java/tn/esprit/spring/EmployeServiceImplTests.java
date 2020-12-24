@@ -37,7 +37,6 @@ public class EmployeServiceImplTests {
 
 	
 	
-	/////////////////////////////////// START Khaled MODULE CRUD TEST Employe ////////////////////////////////////////
 
 	@Test
 	public void testajouterEmploye() throws ParseException {
@@ -74,7 +73,6 @@ public class EmployeServiceImplTests {
 		assertEquals(89, Employes.size());
 	}
 	
-	///////////////////////////////////////// FINISH Khaled MODULE CRUD TEST Employe /////////////////////////////
 
 	
 	
