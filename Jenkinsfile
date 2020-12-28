@@ -7,9 +7,7 @@ pipeline {
                 maven 'Maven'
         }
         environment {
-		imagename = "marwanbeltaief/cd"
-   		registryCredential = 'dockerhub_id'
-   		dockerImage = ''
+		
             	PAGERDUTY_SERVERS_INT_KEY = credentials('PAGERDUTY_SERVERS_INT_KEY')
 		
     }
@@ -51,17 +49,7 @@ pipeline {
       					}
    				 }
    				 
-     	     stage('Deploy Image') {
- 		steps{
-       				script {
-        						  docker.withRegistry( '', registryCredential ) {
-          						  dockerImage.push("$BUILD_NUMBER")
-         					      	  dockerImage.push('latest')
-
-        					      }
-       					 		}
-    					  }
-   				 }
+     	    
 
             }
 
