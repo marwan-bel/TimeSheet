@@ -9,6 +9,9 @@ pipeline {
         environment {
 		
             	PAGERDUTY_SERVERS_INT_KEY = credentials('PAGERDUTY_SERVERS_INT_KEY')
+		mavenHome= tool 'myMaven'
+		dockerHome= tool 'myDocker'
+		PATH = "$dockerHome/bin:$mavenHome/bin:$PATH"
 		
     }
 
