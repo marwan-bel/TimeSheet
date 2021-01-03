@@ -1,7 +1,3 @@
-#dev-timesheet-backend-state-beltaief-marwan
-#vpc_id: vpc-786c0202
-#subnetes_id: subnet-66d68f48, subnet-ec7092a1 ,subnet-b4f6a9e8
-
 terraform {
   backend "s3" {
     bucket = "mybucket" # Will be overridden from build
@@ -26,9 +22,9 @@ provider "kubernetes" {
   version                = "~> 1.9"
 }
 
-module "in28minutes-cluster" {
+module "my-cluster" {
   source          = "terraform-aws-modules/eks/aws"
-  cluster_name    = "in28minutes-cluster"
+  cluster_name    = "my-cluster"
   cluster_version = "1.14"
   subnets         = ["subnet-66d68f48", "subnet-ec7092a1"] #CHANGE
   #subnets = data.aws_subnet_ids.subnets.ids
@@ -47,11 +43,11 @@ module "in28minutes-cluster" {
 }
 
 data "aws_eks_cluster" "cluster" {
-  name = module.in28minutes-cluster.cluster_id
+  name = module.my-cluster.cluster_id
 }
 
 data "aws_eks_cluster_auth" "cluster" {
-  name = module.in28minutes-cluster.cluster_id
+  name = module.my-cluster.cluster_id
 }
 
 
@@ -77,4 +73,5 @@ resource "kubernetes_cluster_role_binding" "example" {
 # Needed to set the default region
 provider "aws" {
   region  = "us-east-1"
+  
 }
