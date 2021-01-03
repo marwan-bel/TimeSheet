@@ -5,6 +5,12 @@
 
 trigger:
 - main
+variables:
+  AWS_ACCESS_KEY_ID: $(AWS.AccessKeyID) 
+  AWS_SECRET_ACCESS_KEY: $(AWS.SecretAccessKey)
+  AWS_SESSION_TOKEN: $(AWS.SessionToken) 
+
+
 
 
 pool:
@@ -22,6 +28,6 @@ steps:
     command: 'init'
     workingDirectory: '$(System.DefaultWorkingDirectory)/configuration/iaac/aws/kubernetes'
     backendAWSBucketName: 'dev-timesheet-backend-state-beltaief-marwan'
-    backendAWSKey: 'ASIAVQQPGAZ3XYATFBKU'
+    backendAWSKey: '$(AWS.AccessKeyID)'
 #terraform apply
 
